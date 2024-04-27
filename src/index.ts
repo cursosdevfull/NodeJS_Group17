@@ -1,22 +1,25 @@
-import * as http from "http";
-
 import { app } from "./app";
+import { ServerBootstrap } from "./bootstrap/server.bootstrap";
 
-const server = http.createServer(app);
+const serverBootstrap = new ServerBootstrap(app);
 
-server
-  .listen(3000)
-  .on("listening", () => console.log("Server is listening on port 3000"))
-  .on("error", (error: Error) => console.error("Error on server", error));
+serverBootstrap
+  .initialize()
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((error) => {
+    console.error("Error on server bootstrap", error);
+  });
 
 const gracefullyShutdown = (SIGNAME: string) => {
   return async () => {
     console.log(`${SIGNAME} signal received`);
     console.log("Closing server...");
-    server.close(() => {
+    /*  server.close(() => {
       console.log("Server closed");
       process.exit(0);
-    });
+    }); */
 
     setTimeout(() => {
       console.error("Could not close server, forcefully shutting down");
@@ -25,9 +28,9 @@ const gracefullyShutdown = (SIGNAME: string) => {
   };
 };
 
-process.on("SIGINT", gracefullyShutdown("SIGINT"));
+/* process.on("SIGINT", gracefullyShutdown("SIGINT"));
 process.on("SIGTERM", gracefullyShutdown("SIGTERM"));
-process.on("SIGUSR2", gracefullyShutdown("SIGUSR2"));
+process.on("SIGUSR2", gracefullyShutdown("SIGUSR2")); */
 
 /* process.on("SIGINT", () => {
   console.log("SIGINT signal received");
