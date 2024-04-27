@@ -50,6 +50,15 @@ export const file = (
   response.end();
 };
 
+export const fileStream = (
+  request: http.IncomingMessage,
+  response: http.ServerResponse
+) => {
+  response.writeHead(200, { "content-type": "application/pdf" });
+  const stream = fs.createReadStream(`${__dirname}/manual.pdf`);
+  stream.pipe(response);
+};
+
 export const image = (
   request: http.IncomingMessage,
   response: http.ServerResponse
