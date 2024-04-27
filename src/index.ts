@@ -3,14 +3,25 @@ import { ServerBootstrap } from "./bootstrap/server.bootstrap";
 
 const serverBootstrap = new ServerBootstrap(app);
 
-serverBootstrap
+const start = async () => {
+  try {
+    const responseServer = await serverBootstrap.initialize();
+    console.log(responseServer);
+  } catch (error) {
+    console.error("Error on server bootstrap", error);
+  }
+};
+
+start();
+
+/* serverBootstrap
   .initialize()
   .then((response) => {
     console.log(response);
   })
   .catch((error) => {
     console.error("Error on server bootstrap", error);
-  });
+  }); */
 
 const gracefullyShutdown = (SIGNAME: string) => {
   return async () => {
