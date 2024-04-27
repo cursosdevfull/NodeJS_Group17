@@ -1,27 +1,15 @@
-import * as http from "http";
+import express from "express";
 
 import { about, api, file, home, image, user, video } from "./callbacks";
 
-const app = (
-  path: string,
-  cb: (request: http.IncomingMessage, response: http.ServerResponse) => void
-) => {
-  return (request: http.IncomingMessage, response: http.ServerResponse) => {
-    if (request.url === path) {
-      cb(request, response);
-    }
-  };
-};
+const app = express();
 
-export const serverHttp = (
-  request: http.IncomingMessage,
-  response: http.ServerResponse
-) => {
-  app("/", home)(request, response);
-  app("/api", api)(request, response);
-  app("/user", user)(request, response);
-  app("/about", about)(request, response);
-  app("/file", file)(request, response);
-  app("/image", image)(request, response);
-  app("/video", video)(request, response);
-};
+app.get("/", home);
+app.get("/api", api);
+app.get("/user", user);
+app.get("/about", about);
+app.get("/file", file);
+app.get("/image", image);
+app.get("/video", video);
+
+export { app };
