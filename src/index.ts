@@ -1,17 +1,20 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 
-import { app } from "./app";
-import { ServerBootstrap } from "./bootstrap/server.bootstrap";
-import { IServerBootstrap } from "./bootstrap/server.interface";
+import app from './app';
+import { Bootstrap } from './bootstrap/bootstrap.interface';
+import { ServerBootstrap } from './bootstrap/server.bootstrap';
 
 dotenv.config({ path: "env-variables.txt" });
 
-const serverBootstrap: IServerBootstrap = new ServerBootstrap(app);
+const serverBootstrap: Bootstrap = new ServerBootstrap(app);
 
 (async () => {
   try {
-    const responseServer = await serverBootstrap.initialize();
-    console.log(responseServer);
+    const listBootstraps: Array<Promise<string>> = [
+      serverBootstrap.initialize(),
+    ];
+    const responses = await Promise.all(listBootstraps);
+    responses.forEach((response) => console.log(response));
   } catch (error) {
     serverBootstrap.close();
     console.error("Error on server bootstrap", error);
@@ -22,10 +25,7 @@ const gracefullyShutdown = (SIGNAME: string) => {
   return async () => {
     console.log(`${SIGNAME} signal received`);
     console.log("Closing server...");
-    serverBootstrap.getServer().close(() => {
-      console.log("Server closed");
-      process.exit(0);
-    });
+    await serverBootstrap.close();
 
     setTimeout(() => {
       console.error("Could not close server, forcefully shutting down");

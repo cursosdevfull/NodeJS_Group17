@@ -1,9 +1,9 @@
-import { Application } from "express";
-import * as http from "http";
-import { AddressInfo } from "net";
+import { Application } from 'express';
+import * as http from 'http';
+import { AddressInfo } from 'net';
 
-import { Parameters } from "../core/parameters/parameters";
-import { Bootstrap } from "./bootstrap.interface";
+import { Parameters } from '../core/parameters/parameters';
+import { Bootstrap } from './bootstrap.interface';
 
 export class ServerBootstrap implements Bootstrap {
   private server!: http.Server;
@@ -35,10 +35,9 @@ export class ServerBootstrap implements Bootstrap {
   }
 
   close() {
-    this.server.close();
-  }
-
-  getServer(): http.Server {
-    return this.server;
+    this.server.close(() => {
+      console.log("Server closed");
+      process.exit(0);
+    });
   }
 }

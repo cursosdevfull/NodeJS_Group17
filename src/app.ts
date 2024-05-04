@@ -1,26 +1,36 @@
-import express from "express";
+import express, { Application } from 'express';
 
-import {
-  about,
-  api,
-  file,
-  fileStream,
-  home,
-  image,
-  user,
-  video,
-} from "./callbacks";
+import studentRouter from './modules/student/presentation/student.routes';
 
-const app = express();
+class App {
+  readonly application: Application;
 
-app.get("/", home);
-app.get("/api", api);
-app.get("/user", user);
-app.get("/about", about);
-app.get("/file", file);
-app.get("/image", image);
-app.get("/video", video);
-app.post("/file-pdf", fileStream);
-app.get("/file-pdf", fileStream);
+  constructor() {
+    this.application = express();
+    this.mountMiddlewares();
+    this.mounthRoutes();
+  }
 
-export { app };
+  private mountMiddlewares() {
+    this.application.use(express.json());
+    this.application.use(express.urlencoded({ extended: true }));
+  }
+
+  private mounthRoutes() {
+    this.application.use("/student", studentRouter);
+
+    this.application.get("/teacher", (req, res) => {
+      res.send("Teacher's list");
+    });
+
+    this.application.get("/teacher/details", (req, res) => {
+      res.send("Teacher's details");
+    });
+
+    this.application.get("/teacher/page", (req, res) => {
+      res.send("Teacher's page");
+    });
+  }
+}
+
+export default new App().application;
