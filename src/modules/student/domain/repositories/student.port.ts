@@ -1,4 +1,4 @@
-import { IStudent, IStudentUpdate } from '../infrastructure/in-memory/student.inmemory';
+import { IStudent, IStudentUpdate } from '../../infrastructure/in-memory/student.inmemory';
 
 export interface StudentPort {
   findAll(): Promise<IStudent[]>;

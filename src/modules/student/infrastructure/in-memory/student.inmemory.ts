@@ -1,4 +1,4 @@
-import { StudentPort } from '../../presentation/student.port';
+import { StudentPort } from '../../domain/repositories/student.port';
 import studentData from './student.json';
 
 export interface IStudent {

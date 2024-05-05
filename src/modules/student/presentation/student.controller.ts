@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
+import { StudentPort } from '../domain/repositories/student.port';
 import { IStudent, IStudentUpdate } from '../infrastructure/in-memory/student.inmemory';
-import { StudentPort } from './student.port';
 
 export class StudentController {
   private readonly repository: StudentPort;
