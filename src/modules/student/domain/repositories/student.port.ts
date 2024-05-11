@@ -1,13 +1,14 @@
-import { IStudent, IStudentUpdate } from '../../infrastructure/in-memory/student.inmemory';
+import { IStudentUpdate, Student } from "../student";
 
 export interface StudentPort {
-  findAll(): Promise<IStudent[]>;
-  findOne(id: number): Promise<IStudent | undefined>;
-  getByPage(page: number, limit: number): Promise<IStudent[]>;
-  create(student: IStudent): Promise<IStudent>;
+  findAll(): Promise<Student[]>;
+  findOne(id: number): Promise<Student | undefined>;
+  getByPage(page: number, limit: number): Promise<Student[]>;
+  create(student: Student): Promise<Student>;
   update(
     id: number,
     student: Partial<IStudentUpdate>
-  ): Promise<IStudent | undefined>;
-  delete(id: number): Promise<IStudent | undefined>;
+  ): Promise<Student | undefined>;
+  delete(id: number): Promise<Student | undefined>;
+  findByEmail(email: string): Promise<Student | undefined>;
 }

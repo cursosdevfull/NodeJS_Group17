@@ -19,6 +19,20 @@ interface StudentOptionals {
   id: number;
 }
 
+export interface IStudentUpdate {
+  name: string;
+  lastname: string;
+  age: number;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  country: string;
+  gender: string;
+  career: string;
+  semester: number;
+}
+
 export type StudentProperties = StudentEssentials & Partial<StudentOptionals>;
 
 export class Student {
@@ -59,18 +73,6 @@ export class Student {
     )
       throw new Error("Invalid career");
 
-    /* this.name = props.name;
-    this.lastname = props.lastname;
-    this.age = props.age;
-    this.email = props.email;
-    this.phone = props.phone;
-    this.address = props.address;
-    this.city = props.city;
-    this.country = props.country;
-    this.gender = props.gender;
-    this.career = props.career;
-    this.semester = props.semester; */
-
     Object.assign(this, props);
 
     if (props.id && props.id > 0) {
@@ -84,7 +86,7 @@ export class Student {
     }
 
     if (props.createdAt) {
-      this.createdAt = createdAt;
+      this.createdAt = props.createdAt;
     } else {
       this.createdAt = new Date();
     }
@@ -112,25 +114,12 @@ export class Student {
     };
   }
 
-  update(name: string) {
-    this.name = name;
+  update(props: Partial<IStudentUpdate>) {
+    Object.assign(this, props);
     this.updatedAt = new Date();
   }
+
+  delete() {
+    this.deletedAt = new Date();
+  }
 }
-
-const props: StudentProperties = {
-  name: "John",
-  lastname: "Doe",
-  age: 20,
-  email: "john.doe@email.com",
-  phone: "123456789",
-  address: "123 Main St",
-  city: "SpringField",
-  country: "USA",
-  gender: "male",
-  career: "Computer Science",
-  semester: 1,
-  createdAt: new Date(),
-};
-
-const student = new Student(props);

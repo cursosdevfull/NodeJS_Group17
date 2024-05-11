@@ -1,15 +1,15 @@
-### /, post
+### 
 get http://localhost:3000/
 
 ###
 get http://localhost:3000/student
 
 ###
-get http://localhost:3000/student/0
+get http://localhost:3000/student/5
 
 
 ###
-get http://localhost:3000/student/page?page=1&limit=2
+get http://localhost:3000/student/page?page=1&limit=20
 
 ###
 post http://localhost:3000/student
@@ -19,21 +19,29 @@ Content-Type: application/json
     "name": "Juan",
     "lastname": "Perez",
     "age": 20,
-    "email": "juan.perez@email.com",
+    "email": "juan.perezemail.com",
     "phone": "1234567890",
     "address": "Calle 123",
     "city": "Bogota",
     "country": "Colombia",
     "gender": "male",
-    "career": "PH. Sistemas",
+    "career": "Ingeniería de sistemas",
     "semester": 5,
     "createdAt": "2024-05-04T16:38:00.000Z"
 }
 
 ###
-delete http://localhost:3000/student/4
+delete http://localhost:3000/student/5
 
 
 ###
-get http://localhost:3000/student/3
+get http://localhost:3000/student/5
+
+###
+put http://localhost:3000/student/5
+Content-Type: application/json
+
+{
+    "name": "Juan"
+}
 

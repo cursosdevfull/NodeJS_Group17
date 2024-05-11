@@ -1,22 +1,17 @@
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
 
-import { StudentPort } from '../domain/repositories/student.port';
-import { IStudent, IStudentUpdate } from '../infrastructure/in-memory/student.inmemory';
+import { StudentApplication } from "../application/student.application";
+import { StudentPort } from "../domain/repositories/student.port";
+import { IStudentUpdate, Student, StudentProperties } from "../domain/student";
 
 export class StudentController {
-  private readonly repository: StudentPort;
-
-  constructor(repository: StudentPort) {
-    this.repository = repository;
-  }
-
-  //constructor(private readonly repository: StudentInMemory) {}
+  constructor(
+    private readonly repository: StudentPort,
+    private readonly application: StudentApplication
+  ) {}
 
   async getAll(req: Request, res: Response) {
-    const students = await this.repository.findAll();
-
-    //res.status(200).type("application/json").send(JSON.stringify(students));
-    //res.type("application/json").send(JSON.stringify(students));
+    const students = await this.application.getAll();
     res.json(students);
   }
 
@@ -27,8 +22,7 @@ export class StudentController {
     if (Number(req.params.id) < 1)
       return res.status(400).json({ message: "Invalid ID" });
 
-    const student = await this.repository.findOne(Number(req.params.id));
-    //res.send("Student's details");
+    const student = await this.application.getById(Number(req.params.id));
     res.json(student);
   }
 
@@ -42,7 +36,7 @@ export class StudentController {
     if (Number(page) < 1 || Number(limit) < 1)
       return res.status(400).json({ message: "Invalid page or limit" });
 
-    const students = await this.repository.getByPage(
+    const students = await this.application.getByPage(
       Number(page),
       Number(limit)
     );
@@ -87,7 +81,7 @@ export class StudentController {
     )
       return res.status(400).json({ message: "Invalid career" });
 
-    const student: IStudent = {
+    const student: StudentProperties = {
       name,
       lastname,
       age,
@@ -101,14 +95,14 @@ export class StudentController {
       semester,
     };
 
-    const response = await this.repository.create(student);
+    const response = await this.application.create(new Student(student));
     res.json(response);
   }
 
   async update(req: Request, res: Response) {
     const student: Partial<IStudentUpdate> = req.body;
 
-    const response = await this.repository.update(
+    const response = await this.application.update(
       Number(req.params.id),
       student
     );
@@ -116,7 +110,7 @@ export class StudentController {
   }
 
   async delete(req: Request, res: Response) {
-    const response = await this.repository.delete(Number(req.params.id));
+    const response = await this.application.remove(Number(req.params.id));
     res.json(response);
   }
 }

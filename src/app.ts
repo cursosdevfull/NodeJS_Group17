@@ -1,6 +1,6 @@
-import express, { Application } from 'express';
+import express, { Application } from "express";
 
-import studentRouter from './modules/student/presentation/student.routes';
+import studentRouter from "./modules/student/presentation/student.routes";
 
 class App {
   readonly application: Application;
