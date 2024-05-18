@@ -9,7 +9,7 @@ get http://localhost:3000/student/5
 
 
 ###
-get http://localhost:3000/student/page?page=1&limit=20
+get http://localhost:3000/student/page?page=4&limit=2
 
 ###
 post http://localhost:3000/student
@@ -19,7 +19,7 @@ Content-Type: application/json
     "name": "Juan",
     "lastname": "Perez",
     "age": 20,
-    "email": "juan.perezemail.com",
+    "email": "juan.perez@email.com",
     "phone": "1234567890",
     "address": "Calle 123",
     "city": "Bogota",

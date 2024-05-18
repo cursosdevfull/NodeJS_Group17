@@ -1,14 +1,13 @@
 import { Request, Response } from "express";
 
 import { StudentApplication } from "../application/student.application";
-import { StudentPort } from "../domain/repositories/student.port";
 import { IStudentUpdate, Student, StudentProperties } from "../domain/student";
+import { StudentInMemory } from "../infrastructure/in-memory/student.inmemory";
 
-export class StudentController {
-  constructor(
-    private readonly repository: StudentPort,
-    private readonly application: StudentApplication
-  ) {}
+class StudentController {
+  constructor(private readonly application: StudentApplication) {
+    console.log("StudentController constructor");
+  }
 
   async getAll(req: Request, res: Response) {
     const students = await this.application.getAll();
@@ -114,3 +113,7 @@ export class StudentController {
     res.json(response);
   }
 }
+
+export default new StudentController(
+  new StudentApplication(StudentInMemory.getInstance())
+);

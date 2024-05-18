@@ -66,5 +66,35 @@
     "createdAt": "2024-05-04T15:30:00Z",
     "updatedAt": null,
     "deletedAt": null
+  },
+  {
+    "id": 5,
+    "name": "Juan",
+    "lastname": "Perez",
+    "age": 20,
+    "email": "juan.perez@email.com",
+    "phone": "1234567890",
+    "address": "Calle 123",
+    "city": "Bogota",
+    "country": "Colombia",
+    "gender": "male",
+    "career": "Ingeniería de sistemas",
+    "semester": 5,
+    "createdAt": "2024-05-18T15:42:42.985Z"
+  },
+  {
+    "id": 6,
+    "name": "Juan",
+    "lastname": "Perez",
+    "age": 20,
+    "email": "juan.perez@email.com",
+    "phone": "1234567890",
+    "address": "Calle 123",
+    "city": "Bogota",
+    "country": "Colombia",
+    "gender": "male",
+    "career": "Ingeniería de sistemas",
+    "semester": 5,
+    "createdAt": "2024-05-18T16:02:11.519Z"
   }
 ]

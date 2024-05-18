@@ -1,19 +1,17 @@
 import { Router } from "express";
 
-import { StudentApplication } from "../application/student.application";
-import { StudentInMemory } from "../infrastructure/in-memory/student.inmemory";
-import { StudentController } from "./student.controller";
+import studentController from "./student.controller";
 
 export class StudentRoutes {
   readonly router: Router;
-  readonly controller: StudentController;
+  readonly controller = studentController;
 
   constructor() {
+    console.log("StudentRoutes constructor");
     this.router = Router();
-    this.controller = new StudentController(
-      StudentInMemory.getInstance(),
+    /*this.controller = new StudentController(
       new StudentApplication(StudentInMemory.getInstance())
-    );
+    );*/
     this.mountRoutes();
   }
 
