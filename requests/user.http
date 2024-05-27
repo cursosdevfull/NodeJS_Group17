@@ -1,0 +1,32 @@
+### Create a new user
+post http://localhost:3000/user/v1
+Content-Type: application/json
+
+{
+    "name": "Antonio",
+    "lastname": "Cárdenas",
+    "email": "antonio.cardenas@email.com",
+    "password": "12345678",
+    "roles": ["user"]
+}
+
+### List all users
+get http://localhost:3000/user/v1
+
+### Get user by id
+get http://localhost:3000/user/v1/41b3632a-0d6f-4a33-853d-32c8fbe9d339
+
+### Update user
+put http://localhost:3000/user/v1/b9666e21-76b2-443c-9140-4968cd677ece
+Content-Type: application/json
+
+{
+    "name": "Jana",
+    "lastname": "Pastizales"
+}
+
+### Get users by page
+get http://localhost:3000/user/v1/page?page=0&limit=10
+
+### Delete user
+delete http://localhost:3000/user/v1/b9666e21-76b2-443c-9140-4968cd677ece

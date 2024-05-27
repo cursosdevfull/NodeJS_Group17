@@ -7,7 +7,6 @@ export class StudentRoutes {
   readonly controller = studentController;
 
   constructor() {
-    console.log("StudentRoutes constructor");
     this.router = Router();
     /*this.controller = new StudentController(
       new StudentApplication(StudentInMemory.getInstance())

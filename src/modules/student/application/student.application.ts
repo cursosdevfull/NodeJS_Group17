@@ -3,9 +3,7 @@ import { IStudentUpdate, Student } from "../domain/student";
 import { StudentResponseDto } from "./dtos/student-response.dto";
 
 export class StudentApplication {
-  constructor(private readonly repository: StudentPort) {
-    console.log("StudentApplication constructor");
-  }
+  constructor(private readonly repository: StudentPort) {}
 
   async getAll() {
     const students = await this.repository.findAll();

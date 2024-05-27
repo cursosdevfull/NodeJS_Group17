@@ -1,16 +1,18 @@
-import { Application } from 'express';
-import * as http from 'http';
-import { AddressInfo } from 'net';
+import { Application } from "express";
+import * as http from "http";
+import { AddressInfo } from "net";
 
-import { Parameters } from '../core/parameters/parameters';
-import { Bootstrap } from './bootstrap.interface';
+import { Parameters } from "../core/parameters/parameters";
+import { Logger } from "../core/utils/logger";
+import { Bootstrap, TInitialize } from "./bootstrap.interface";
 
 export class ServerBootstrap implements Bootstrap {
   private server!: http.Server;
+  private readonly logger = Logger.createLogger();
 
   constructor(private app: Application) {}
 
-  initialize(): Promise<string> {
+  initialize(): Promise<TInitialize> {
     return new Promise((resolve, reject) => {
       const server = http.createServer(this.app);
 
@@ -26,7 +28,7 @@ export class ServerBootstrap implements Bootstrap {
           );
         })
         .on("error", (error: Error) => {
-          console.error("Error on server", error);
+          this.logger.logError("Error on server", error);
           reject(error);
         });
 
@@ -36,7 +38,7 @@ export class ServerBootstrap implements Bootstrap {
 
   close() {
     this.server.close(() => {
-      console.log("Server closed");
+      this.logger.logInfo("Server closed");
       process.exit(0);
     });
   }

@@ -5,9 +5,7 @@ import { IStudentUpdate, Student, StudentProperties } from "../domain/student";
 import { StudentInMemory } from "../infrastructure/in-memory/student.inmemory";
 
 class StudentController {
-  constructor(private readonly application: StudentApplication) {
-    console.log("StudentController constructor");
-  }
+  constructor(private readonly application: StudentApplication) {}
 
   async getAll(req: Request, res: Response) {
     const students = await this.application.getAll();
