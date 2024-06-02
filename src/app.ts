@@ -1,6 +1,8 @@
-import express, { Application } from "express";
+import express, { Application } from 'express';
 
-import { router as userRouter } from "./modules/user/presentation/user.routes";
+import { router as authRouter } from './modules/auth/presentation/auth.routes';
+import { router as roleRouter } from './modules/role/presentation/role.routes';
+import { router as userRouter } from './modules/user/presentation/user.routes';
 
 class App {
   readonly application: Application;
@@ -31,6 +33,8 @@ class App {
 
   private mounthRoutes() {
     this.application.use("/user", userRouter);
+    this.application.use("/role", roleRouter);
+    this.application.use("/auth", authRouter);
   }
 }
 

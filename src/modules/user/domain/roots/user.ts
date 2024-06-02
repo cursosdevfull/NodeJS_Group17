@@ -1,11 +1,13 @@
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
+
+import { Role } from '../../../role/domain/role';
 
 export interface UserRequired {
   name: string;
   lastname: string;
   email: string;
   password: string;
-  roles: any[];
+  roles: Role[];
 }
 
 export interface UserOptional {
@@ -30,7 +32,7 @@ export class User {
   private lastname: string;
   private readonly email: string;
   private password: string;
-  private roles: any[];
+  private roles: Role[];
   private refreshToken: string;
   private secret: string;
   private image: string;

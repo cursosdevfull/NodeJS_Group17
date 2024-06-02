@@ -1,11 +1,11 @@
-import { IsNull } from "typeorm";
+import { IsNull } from 'typeorm';
 
-import { DatabaseBootstrap } from "../../../bootstrap/database.bootstrap";
-import { Logger } from "../../../core/utils/logger";
-import { UserRepository } from "../domain/repositories/user.repository";
-import { User } from "../domain/roots/user";
-import { UserDto } from "./dtos/user.dto";
-import { UserEntity } from "./entities/user.entity";
+import { DatabaseBootstrap } from '../../../bootstrap/database.bootstrap';
+import { Logger } from '../../../core/utils/logger';
+import { UserRepository } from '../domain/repositories/user.repository';
+import { User } from '../domain/roots/user';
+import { UserDto } from './dtos/user.dto';
+import { UserEntity } from './entities/user.entity';
 
 export class UserInfrastructure implements UserRepository {
   private readonly logger = Logger.createLogger();
@@ -15,9 +15,9 @@ export class UserInfrastructure implements UserRepository {
       const repository =
         DatabaseBootstrap.getDataSource().getRepository(UserEntity);
       const entity = UserDto.fromDomainToData(user) as UserEntity;
-      await repository.save(entity);
+      const userSaved = await repository.save(entity);
 
-      return user;
+      return UserDto.fromDataToDomain(userSaved) as User;
     } catch (error) {
       this.logger.logError("Error saving user", error);
       throw new Error("Error saving user");
@@ -31,6 +31,7 @@ export class UserInfrastructure implements UserRepository {
 
       const usersEntity = await repository.find({
         where: { deletedAt: IsNull() },
+        relations: ["roles"],
       });
 
       return UserDto.fromDataToDomain(usersEntity) as User[];
@@ -47,6 +48,7 @@ export class UserInfrastructure implements UserRepository {
 
       const userEntity = await repository.findOne({
         where: { deletedAt: IsNull(), userId },
+        relations: ["roles"],
       });
 
       return UserDto.fromDataToDomain(userEntity) as User;
@@ -63,6 +65,7 @@ export class UserInfrastructure implements UserRepository {
 
       const userEntity = await repository.findOne({
         where: { deletedAt: IsNull(), email },
+        relations: ["roles"],
       });
 
       return UserDto.fromDataToDomain(userEntity) as User;
@@ -79,6 +82,7 @@ export class UserInfrastructure implements UserRepository {
 
       const userEntity = await repository.findOne({
         where: { deletedAt: IsNull(), refreshToken },
+        relations: ["roles"],
       });
 
       return UserDto.fromDataToDomain(userEntity) as User;
@@ -97,6 +101,7 @@ export class UserInfrastructure implements UserRepository {
         where: { deletedAt: IsNull() },
         skip: page * limit,
         take: limit,
+        relations: ["roles"],
       });
 
       return UserDto.fromDataToDomain(usersEntity) as User[];

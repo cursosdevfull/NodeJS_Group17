@@ -1,6 +1,8 @@
-import { User } from "../../domain/roots/user";
-import { UserFactory } from "../../domain/roots/user.factory";
-import { UserEntity } from "../entities/user.entity";
+import { Role } from '../../../role/domain/role';
+import { RoleEntity } from '../../../role/infrastructure/entities/role.entity';
+import { User } from '../../domain/roots/user';
+import { UserFactory } from '../../domain/roots/user.factory';
+import { UserEntity } from '../entities/user.entity';
 
 export class UserDto {
   static fromDomainToData(data: User | User[]): UserEntity | UserEntity[] {
@@ -20,6 +22,13 @@ export class UserDto {
     userEntity.deletedAt = data.properties.deletedAt;
     userEntity.secret = data.properties.secret;
     userEntity.image = data.properties.image;
+    userEntity.roles = data.properties.roles.map((role: any) => {
+      const roleEntity = new RoleEntity();
+      roleEntity.roleId = role.roleId;
+      roleEntity.roleName = role.roleName ?? "";
+
+      return roleEntity;
+    });
 
     return userEntity;
   }
@@ -41,7 +50,7 @@ export class UserDto {
       deletedAt: data.deletedAt,
       secret: data.secret,
       image: data.image,
-      roles: ["admin"],
+      roles: data.roles.map((role) => new Role(role.roleId, role.roleName)),
     });
   }
 }

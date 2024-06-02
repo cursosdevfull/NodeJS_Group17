@@ -1,4 +1,4 @@
-import { User } from "../../domain/roots/user";
+import { User } from '../../domain/roots/user';
 
 class UserResponse {
   userId: string;
@@ -6,7 +6,7 @@ class UserResponse {
   name: string;
   lastname: string;
   image: string;
-  roles: string[];
+  roles: { roleId: string; roleName: string }[];
 }
 
 export class UserResponseDto {
@@ -21,7 +21,10 @@ export class UserResponseDto {
       name: domain.properties.name,
       lastname: domain.properties.lastname,
       image: domain.properties.image,
-      roles: domain.properties.roles,
+      roles: domain.properties.roles.map((role) => ({
+        roleId: role.properties.roleId,
+        roleName: role.properties.roleName,
+      })),
     };
   }
 }

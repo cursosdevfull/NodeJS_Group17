@@ -1,4 +1,6 @@
-import { Column, Entity, Index, PrimaryColumn } from "typeorm";
+import { Column, Entity, Index, JoinTable, ManyToMany, PrimaryColumn } from 'typeorm';
+
+import { RoleEntity } from '../../../role/infrastructure/entities/role.entity';
 
 @Index("idx1", ["name", "lastname"], { unique: true })
 @Entity({ name: "user" })
@@ -35,4 +37,8 @@ export class UserEntity {
 
   @Column({ type: "timestamp", nullable: true })
   deletedAt: Date;
+
+  @ManyToMany(() => RoleEntity, (role) => role.users)
+  @JoinTable()
+  roles: RoleEntity[];
 }
