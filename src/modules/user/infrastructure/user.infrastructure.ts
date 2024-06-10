@@ -1,30 +1,50 @@
-import { IsNull } from 'typeorm';
+import { err, ok, Result } from "neverthrow";
+import { IsNull } from "typeorm";
 
-import { DatabaseBootstrap } from '../../../bootstrap/database.bootstrap';
-import { Logger } from '../../../core/utils/logger';
-import { UserRepository } from '../domain/repositories/user.repository';
-import { User } from '../domain/roots/user';
-import { UserDto } from './dtos/user.dto';
-import { UserEntity } from './entities/user.entity';
+import { DatabaseBootstrap } from "../../../bootstrap/database.bootstrap";
+import {
+  BaseException,
+  InternalServerErrorException,
+  MESSAGE_STATUS,
+} from "../../../core/handle-errors/responses/exception";
+import { LogContext, Logger } from "../../../core/utils/logger";
+import { UserRepository } from "../domain/repositories/user.repository";
+import { User } from "../domain/roots/user";
+import { UserDto } from "./dtos/user.dto";
+import { UserEntity } from "./entities/user.entity";
+
+export type ResultSave = Result<User, BaseException>;
+export type ResultGetAll = Result<User[], BaseException>;
+export type ResultGetById = Result<User | null, BaseException>;
+export type ResultGetByEmail = Result<User | null, BaseException>;
+export type ResultGetByRefreshToken = Result<User | null, BaseException>;
+export type ResultGetByPage = Result<User[], BaseException>;
 
 export class UserInfrastructure implements UserRepository {
   private readonly logger = Logger.createLogger();
 
-  async save(user: User): Promise<User> {
+  async save(user: User): Promise<ResultSave> {
     try {
       const repository =
         DatabaseBootstrap.getDataSource().getRepository(UserEntity);
       const entity = UserDto.fromDomainToData(user) as UserEntity;
       const userSaved = await repository.save(entity);
 
-      return UserDto.fromDataToDomain(userSaved) as User;
-    } catch (error) {
+      return ok(UserDto.fromDataToDomain(userSaved) as User);
+    } catch (error: unknown) {
       this.logger.logError("Error saving user", error);
-      throw new Error("Error saving user");
+      return err(
+        new InternalServerErrorException({
+          message:
+            (error as LogContext).sqlMessage ??
+            MESSAGE_STATUS.INTERNAL_SERVER_ERROR,
+          name: "ERROR DATABASE",
+        })
+      );
     }
   }
 
-  async getAll(): Promise<User[]> {
+  async getAll(): Promise<ResultGetAll> {
     try {
       const repository =
         DatabaseBootstrap.getDataSource().getRepository(UserEntity);
@@ -34,14 +54,21 @@ export class UserInfrastructure implements UserRepository {
         relations: ["roles"],
       });
 
-      return UserDto.fromDataToDomain(usersEntity) as User[];
-    } catch (error) {
-      this.logger.logError("Error getAll user", error);
-      throw new Error("Error getAll user");
+      return ok(UserDto.fromDataToDomain(usersEntity) as User[]);
+    } catch (error: unknown) {
+      this.logger.logError("Error saving user", error);
+      return err(
+        new InternalServerErrorException({
+          message:
+            (error as LogContext).sqlMessage ??
+            MESSAGE_STATUS.INTERNAL_SERVER_ERROR,
+          name: "",
+        })
+      );
     }
   }
 
-  async getById(userId: string): Promise<User> {
+  async getById(userId: string): Promise<ResultGetById> {
     try {
       const repository =
         DatabaseBootstrap.getDataSource().getRepository(UserEntity);
@@ -51,14 +78,21 @@ export class UserInfrastructure implements UserRepository {
         relations: ["roles"],
       });
 
-      return UserDto.fromDataToDomain(userEntity) as User;
-    } catch (error) {
-      this.logger.logError("Error getById user", error);
-      throw new Error("Error getById user");
+      return ok(UserDto.fromDataToDomain(userEntity) as User);
+    } catch (error: unknown) {
+      this.logger.logError("Error saving user", error);
+      return err(
+        new InternalServerErrorException({
+          message:
+            (error as LogContext).sqlMessage ??
+            MESSAGE_STATUS.INTERNAL_SERVER_ERROR,
+          name: "",
+        })
+      );
     }
   }
 
-  async getByEmail(email: string): Promise<User> {
+  async getByEmail(email: string): Promise<ResultGetByEmail> {
     try {
       const repository =
         DatabaseBootstrap.getDataSource().getRepository(UserEntity);
@@ -68,14 +102,23 @@ export class UserInfrastructure implements UserRepository {
         relations: ["roles"],
       });
 
-      return UserDto.fromDataToDomain(userEntity) as User;
-    } catch (error) {
-      this.logger.logError("Error getByEmail user", error);
-      throw new Error("Error getByEmail user");
+      return ok(UserDto.fromDataToDomain(userEntity) as User);
+    } catch (error: unknown) {
+      this.logger.logError("Error saving user", error);
+      return err(
+        new InternalServerErrorException({
+          message:
+            (error as LogContext).sqlMessage ??
+            MESSAGE_STATUS.INTERNAL_SERVER_ERROR,
+          name: "",
+        })
+      );
     }
   }
 
-  async getByRefreshToken(refreshToken: string): Promise<User> {
+  async getByRefreshToken(
+    refreshToken: string
+  ): Promise<ResultGetByRefreshToken> {
     try {
       const repository =
         DatabaseBootstrap.getDataSource().getRepository(UserEntity);
@@ -85,14 +128,21 @@ export class UserInfrastructure implements UserRepository {
         relations: ["roles"],
       });
 
-      return UserDto.fromDataToDomain(userEntity) as User;
-    } catch (error) {
-      this.logger.logError("Error getByRefreshToken user", error);
-      throw new Error("Error getByRefreshToken user");
+      return ok(UserDto.fromDataToDomain(userEntity) as User);
+    } catch (error: unknown) {
+      this.logger.logError("Error saving user", error);
+      return err(
+        new InternalServerErrorException({
+          message:
+            (error as LogContext).sqlMessage ??
+            MESSAGE_STATUS.INTERNAL_SERVER_ERROR,
+          name: "",
+        })
+      );
     }
   }
 
-  async getByPage(page: number, limit: number): Promise<User[]> {
+  async getByPage(page: number, limit: number): Promise<ResultGetByPage> {
     try {
       const repository =
         DatabaseBootstrap.getDataSource().getRepository(UserEntity);
@@ -104,10 +154,17 @@ export class UserInfrastructure implements UserRepository {
         relations: ["roles"],
       });
 
-      return UserDto.fromDataToDomain(usersEntity) as User[];
-    } catch (error) {
-      this.logger.logError("Error getByPage user", error);
-      throw new Error("Error getByPage user");
+      return ok(UserDto.fromDataToDomain(usersEntity) as User[]);
+    } catch (error: unknown) {
+      this.logger.logError("Error saving user", error);
+      return err(
+        new InternalServerErrorException({
+          message:
+            (error as LogContext).sqlMessage ??
+            MESSAGE_STATUS.INTERNAL_SERVER_ERROR,
+          name: "",
+        })
+      );
     }
   }
 }

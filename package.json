@@ -31,10 +31,12 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.9.7",
+    "neverthrow": "^6.2.2",
     "qrcode": "^1.5.3",
     "reflect-metadata": "^0.2.2",
     "speakeasy": "^2.0.0",

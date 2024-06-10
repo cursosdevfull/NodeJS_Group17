@@ -1,18 +1,19 @@
 ### Create a new user
 post http://localhost:3000/user/v1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3YzYyMzAwMi1kMWVlLTQzOWEtYWYxNC1iM2NkYmVkZmYzNDUiLCJuYW1lIjoiQW50b25pbzgiLCJsYXN0bmFtZSI6IkPDoXJkZW5hcyIsInJvbGVzIjpbeyJyb2xlSWQiOiIwOTI3MWJmZi1kZWYyLTQ5MmUtOThiYi04ZjUzM2M3NGFhYzQiLCJyb2xlTmFtZSI6Ik9QRVJBVE9SIn0seyJyb2xlSWQiOiJkNTM4ODQzYi05NWQxLTQwNmMtYTA2Mi1jNmY1Zjk3ZGExNTQiLCJyb2xlTmFtZSI6IkFETUlOIn1dLCJlbmFibGUyRkEiOnRydWUsImlhdCI6MTcxNzg1NTA2NSwiZXhwIjoxNzE3ODczMDY1fQ.eLvOD08kNtE6WjjoO8lDxBzNJK1Ler9mquDJrO7FW3w
 
 {
     "name": "Antonio3",
     "lastname": "Cárdenas",
-    "email": "antonio4.cardenas@email.com",
-    "password": "12345678",
+    "email": "antoniocardenas@email.com",
+    "password": "12345",
     "roles": [{"roleId": "d538843b-95d1-406c-a062-c6f5f97da154"}, {"roleId": "09271bff-def2-492e-98bb-8f533c74aac4"}]
 }
 
 ### List all users
 get http://localhost:3000/user/v1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3YzYyMzAwMi1kMWVlLTQzOWEtYWYxNC1iM2NkYmVkZmYzNDUiLCJuYW1lIjoiQW50b25pbzgiLCJsYXN0bmFtZSI6IkPDoXJkZW5hcyIsInJvbGVzIjpbeyJyb2xlSWQiOiIwOTI3MWJmZi1kZWYyLTQ5MmUtOThiYi04ZjUzM2M3NGFhYzQiLCJyb2xlTmFtZSI6Ik9QRVJBVE9SIn0seyJyb2xlSWQiOiJkNTM4ODQzYi05NWQxLTQwNmMtYTA2Mi1jNmY1Zjk3ZGExNTQiLCJyb2xlTmFtZSI6IkFETUlOIn1dLCJlbmFibGUyRkEiOnRydWUsImlhdCI6MTcxNzI2Njc1NiwiZXhwIjoxNzE3MjY4NTU2fQ.MNYHTHW0_jvgQmM4kJl0hHF-v3fFXXmmBVSa_Vmk9B4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3YzYyMzAwMi1kMWVlLTQzOWEtYWYxNC1iM2NkYmVkZmYzNDUiLCJuYW1lIjoiQW50b25pbzgiLCJsYXN0bmFtZSI6IkPDoXJkZW5hcyIsInJvbGVzIjpbeyJyb2xlSWQiOiIwOTI3MWJmZi1kZWYyLTQ5MmUtOThiYi04ZjUzM2M3NGFhYzQiLCJyb2xlTmFtZSI6Ik9QRVJBVE9SIn0seyJyb2xlSWQiOiJkNTM4ODQzYi05NWQxLTQwNmMtYTA2Mi1jNmY1Zjk3ZGExNTQiLCJyb2xlTmFtZSI6IkFETUlOIn1dLCJlbmFibGUyRkEiOnRydWUsImlhdCI6MTcxNzg1NTA2NSwiZXhwIjoxNzE3ODczMDY1fQ.eLvOD08kNtE6WjjoO8lDxBzNJK1Ler9mquDJrO7FW3w
 
 ### Get user by id
 get http://localhost:3000/user/v1/9b4278d9-f53a-4d3b-bdcf-8c9c93d659d8

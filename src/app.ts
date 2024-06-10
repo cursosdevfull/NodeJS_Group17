@@ -1,8 +1,9 @@
-import express, { Application } from 'express';
+import express, { Application } from "express";
 
-import { router as authRouter } from './modules/auth/presentation/auth.routes';
-import { router as roleRouter } from './modules/role/presentation/role.routes';
-import { router as userRouter } from './modules/user/presentation/user.routes';
+import { ResponseInterceptor } from "./core/interceptors/response.interceptor";
+import { router as authRouter } from "./modules/auth/presentation/auth.routes";
+import { router as roleRouter } from "./modules/role/presentation/role.routes";
+import { router as userRouter } from "./modules/user/presentation/user.routes";
 
 class App {
   readonly application: Application;
@@ -10,6 +11,7 @@ class App {
   constructor() {
     this.application = express();
     this.mountMiddlewares();
+    this.mountInterceptors();
     this.mountHealthCheck();
     this.mounthRoutes();
   }
@@ -17,6 +19,10 @@ class App {
   private mountMiddlewares() {
     this.application.use(express.json());
     this.application.use(express.urlencoded({ extended: true }));
+  }
+
+  private mountInterceptors() {
+    this.application.use(ResponseInterceptor);
   }
 
   private mountHealthCheck() {

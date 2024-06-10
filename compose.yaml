@@ -1,0 +1,73 @@
+services:
+  mysql-server:
+    image: mysql:8
+    container_name: mysql-server
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: db
+      MYSQL_USER: shidalgo
+      MYSQL_PASSWORD: 54321
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    volumes:
+      - vol-mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    networks:
+      - net-curso
+
+  redis-server:
+    image: redis:6.0.5-alpine
+    container_name: redis-server
+    restart: unless-stopped
+    command: redis-server --requirepass todovale
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    networks:
+      - net-curso
+
+  redis-client:
+    image: rediscommander/redis-commander:latest
+    container_name: redis-client
+    restart: unless-stopped
+    environment:
+      REDIS_HOSTS: redis-server
+      REDIS_PORT: "6379"
+      REDIS_PASSWORD: "todovale"
+    ports:
+      - "8081:8081"
+    networks:
+      - net-curso
+    depends_on:
+      redis-server:
+        condition: service_healthy
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    networks:
+      - net-curso
+
+volumes:
+  vol-mysql:
+    external: true
+    name: vol-mysql
+
+networks:
+  net-curso:
+    driver: bridge
+    name: net-curso

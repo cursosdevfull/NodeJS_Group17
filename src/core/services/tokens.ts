@@ -1,8 +1,13 @@
-import { sign, verify } from 'jsonwebtoken';
-import { v4 as uuidv4 } from 'uuid';
+import { sign, verify } from "jsonwebtoken";
+import { v4 as uuidv4 } from "uuid";
 
-import { User } from '../../modules/user/domain/roots/user';
-import { Parameters } from '../parameters/parameters';
+import { User } from "../../modules/user/domain/roots/user";
+import { Parameters } from "../parameters/parameters";
+
+export interface ITokens {
+  accessToken: string;
+  refreshToken: string;
+}
 
 export class Tokens {
   static generateAccessToken(user: User, enable2FA: boolean = false) {
@@ -25,7 +30,7 @@ export class Tokens {
     return uuidv4();
   }
 
-  static generateTokens(user: User, enable2FA: boolean = false) {
+  static generateTokens(user: User, enable2FA: boolean = false): ITokens {
     return {
       accessToken: this.generateAccessToken(user, enable2FA),
       refreshToken: user.properties.refreshToken,

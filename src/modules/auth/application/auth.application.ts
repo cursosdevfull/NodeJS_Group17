@@ -1,18 +1,39 @@
-import { Crypt } from '../../../core/services/crypt';
-import { Tokens } from '../../../core/services/tokens';
-import { UserRepository } from '../../user/domain/repositories/user.repository';
-import { Auth } from '../domain/auth';
+import { err, ok, Result } from "neverthrow";
+
+import {
+  BadRequestException,
+  BaseException,
+  NotFoundException,
+} from "../../../core/handle-errors/responses/exception";
+import { Crypt } from "../../../core/services/crypt";
+import { ITokens, Tokens } from "../../../core/services/tokens";
+import { UserRepository } from "../../user/domain/repositories/user.repository";
+import { Auth } from "../domain/auth";
+
+export type ResultLogin = Result<ITokens, BaseException>;
+export type ResultGetRefreshToken = Result<ITokens, BaseException>;
 
 export class AuthApplication {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async login(auth: Auth) {
-    const userFound = await this.userRepository.getByEmail(
+  async login(auth: Auth): Promise<ResultLogin> {
+    const userFoundResult = await this.userRepository.getByEmail(
       auth.properties.email
     );
 
+    if (userFoundResult.isErr()) {
+      return err(userFoundResult.error);
+    }
+
+    const userFound = userFoundResult.value;
+
     if (!userFound) {
-      throw new Error("User not found");
+      return err(
+        new NotFoundException({
+          message: "User not found",
+          name: "User not found",
+        })
+      );
     }
 
     const matchPassword = Crypt.compare(
@@ -21,23 +42,46 @@ export class AuthApplication {
     );
 
     if (!matchPassword) {
-      throw new Error("Invalid password");
+      return err(
+        new BadRequestException({
+          message: "Invalid password",
+          name: "Invalid password",
+        })
+      );
     }
 
-    return Tokens.generateTokens(userFound);
+    return ok(Tokens.generateTokens(userFound));
   }
 
-  async getNewAccessToken(refreshToken: string) {
-    const userFound = await this.userRepository.getByRefreshToken(refreshToken);
+  async getNewAccessToken(
+    refreshToken: string
+  ): Promise<ResultGetRefreshToken> {
+    const userFoundResult = await this.userRepository.getByRefreshToken(
+      refreshToken
+    );
+
+    if (userFoundResult.isErr()) {
+      return err(userFoundResult.error);
+    }
+
+    const userFound = userFoundResult.value;
 
     if (!userFound) {
-      throw new Error("User not found");
+      return err(
+        new NotFoundException({
+          message: "User not found",
+          name: "User not found",
+        })
+      );
     }
 
     userFound.update({ refreshToken: Tokens.generateRefreshToken() });
 
-    await this.userRepository.save(userFound);
+    const result = await this.userRepository.save(userFound);
+    if (result.isErr()) {
+      return err(result.error);
+    }
 
-    return Tokens.generateTokens(userFound);
+    return ok(Tokens.generateTokens(userFound));
   }
 }

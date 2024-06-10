@@ -23,7 +23,16 @@ export class UserController {
     };
     const user = UserFactory.create(props);
 
-    await this.application.save(user);
+    const saveResult = await this.application.save(user);
+
+    if (saveResult.isErr()) {
+      return res.status(saveResult.error.status).json({
+        statusCodeId: saveResult.error.statusCodeId,
+        message: saveResult.error.message,
+        stack: saveResult.error.stack,
+        errorsDetails: saveResult.error.errorsDetails,
+      });
+    }
 
     res.status(201).json({ status: "User created" });
   }
@@ -32,11 +41,29 @@ export class UserController {
     const body = req.body;
     const id: string = req.params.id;
 
-    const userFound = await this.application.getById(id);
+    const userFoundResult = await this.application.getById(id);
 
+    if (userFoundResult.isErr()) {
+      return res.status(userFoundResult.error.status).json({
+        statusCodeId: userFoundResult.error.statusCodeId,
+        message: userFoundResult.error.message,
+        stack: userFoundResult.error.stack,
+        errorsDetails: userFoundResult.error.errorsDetails,
+      });
+    }
+
+    const userFound = userFoundResult.value;
     userFound.update(body);
 
-    await this.application.save(userFound);
+    const result = await this.application.save(userFound);
+    if (result.isErr()) {
+      return res.status(result.error.status).json({
+        statusCodeId: result.error.statusCodeId,
+        message: result.error.message,
+        stack: result.error.stack,
+        errorsDetails: result.error.errorsDetails,
+      });
+    }
 
     res.status(200).json({ status: "User updated" });
   }
@@ -44,17 +71,45 @@ export class UserController {
   async delete(req: Request, res: Response) {
     const id: string = req.params.id;
 
-    const userFound = await this.application.getById(id);
+    const userFoundResult = await this.application.getById(id);
+    if (userFoundResult.isErr()) {
+      return res.status(userFoundResult.error.status).json({
+        statusCodeId: userFoundResult.error.statusCodeId,
+        message: userFoundResult.error.message,
+        stack: userFoundResult.error.stack,
+        errorsDetails: userFoundResult.error.errorsDetails,
+      });
+    }
 
+    const userFound = userFoundResult.value;
     userFound.delete();
 
-    await this.application.save(userFound);
+    const result = await this.application.save(userFound);
+    if (result.isErr()) {
+      return res.status(result.error.status).json({
+        statusCodeId: result.error.statusCodeId,
+        message: result.error.message,
+        stack: result.error.stack,
+        errorsDetails: result.error.errorsDetails,
+      });
+    }
 
     res.status(200).json({ status: "User deleted" });
   }
 
   async getAll(req: Request, res: Response) {
-    const users = await this.application.getAll();
+    const usersResult = await this.application.getAll();
+
+    if (usersResult.isErr()) {
+      return res.status(usersResult.error.status).json({
+        statusCodeId: usersResult.error.statusCodeId,
+        message: usersResult.error.message,
+        stack: usersResult.error.stack,
+        errorsDetails: usersResult.error.errorsDetails,
+      });
+    }
+
+    const users = usersResult.value;
 
     res.status(200).json(users);
   }
@@ -62,7 +117,17 @@ export class UserController {
   async getById(req: Request, res: Response) {
     const id: string = req.params.id;
 
-    const user = await this.application.getById(id);
+    const userResult = await this.application.getById(id);
+    if (userResult.isErr()) {
+      return res.status(userResult.error.status).json({
+        statusCodeId: userResult.error.statusCodeId,
+        message: userResult.error.message,
+        stack: userResult.error.stack,
+        errorsDetails: userResult.error.errorsDetails,
+      });
+    }
+
+    const user = userResult.value;
 
     res.status(200).json(user);
   }
@@ -71,7 +136,17 @@ export class UserController {
     const page: number = parseInt(req.query.page as string);
     const limit: number = parseInt(req.query.limit as string);
 
-    const users = await this.application.getByPage(page, limit);
+    const usersResult = await this.application.getByPage(page, limit);
+    if (usersResult.isErr()) {
+      return res.status(usersResult.error.status).json({
+        statusCodeId: usersResult.error.statusCodeId,
+        message: usersResult.error.message,
+        stack: usersResult.error.stack,
+        errorsDetails: usersResult.error.errorsDetails,
+      });
+    }
+
+    const users = usersResult.value;
 
     res.status(200).json(users);
   }

@@ -1,6 +1,6 @@
-import { User } from '../../domain/roots/user';
+import { User } from "../../domain/roots/user";
 
-class UserResponse {
+export class UserResponse {
   userId: string;
   email: string;
   name: string;

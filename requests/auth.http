@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
     "email": "antonio8.cardenas@email.com",
-    "password": "12345678"
+    "password": "123456789"
 }
 
 ### new access token
@@ -20,17 +20,17 @@ post http://localhost:3000/auth/v1/register
 Content-Type: application/json
 
 {
-    "name": "Antonio8",
-    "lastname": "Cárdenas",
+    "name": "An",
+    "lastname": "Cá",
     "email": "antonio8.cardenas@email.com",
     "password": "12345678",
-    "roles": [{"roleId": "d538843b-95d1-406c-a062-c6f5f97da154"}, {"roleId": "09271bff-def2-492e-98bb-8f533c74aac4"}]
+    "roles": [{"roleId": "d538843b-95d1-406c-a062-c6f5f97da154"}]
 }
 
 ### Enable 2FA
 post http://localhost:3000/auth/v1/enable-2fa
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3YzYyMzAwMi1kMWVlLTQzOWEtYWYxNC1iM2NkYmVkZmYzNDUiLCJuYW1lIjoiQW50b25pbzgiLCJsYXN0bmFtZSI6IkPDoXJkZW5hcyIsInJvbGVzIjpbeyJyb2xlSWQiOiIwOTI3MWJmZi1kZWYyLTQ5MmUtOThiYi04ZjUzM2M3NGFhYzQiLCJyb2xlTmFtZSI6Ik9QRVJBVE9SIn0seyJyb2xlSWQiOiJkNTM4ODQzYi05NWQxLTQwNmMtYTA2Mi1jNmY1Zjk3ZGExNTQiLCJyb2xlTmFtZSI6IkFETUlOIn1dLCJlbmFibGUyRkEiOmZhbHNlLCJpYXQiOjE3MTcyNjY1MTQsImV4cCI6MTcxNzI2ODMxNH0.z5IzPxlLmyH_Ww5NsN1nAWUM1SYsYdJIJgIw5tyLeRo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3YzYyMzAwMi1kMWVlLTQzOWEtYWYxNC1iM2NkYmVkZmYzNDUiLCJuYW1lIjoiQW50b25pbzgiLCJsYXN0bmFtZSI6IkPDoXJkZW5hcyIsInJvbGVzIjpbeyJyb2xlSWQiOiIwOTI3MWJmZi1kZWYyLTQ5MmUtOThiYi04ZjUzM2M3NGFhYzQiLCJyb2xlTmFtZSI6Ik9QRVJBVE9SIn0seyJyb2xlSWQiOiJkNTM4ODQzYi05NWQxLTQwNmMtYTA2Mi1jNmY1Zjk3ZGExNTQiLCJyb2xlTmFtZSI6IkFETUlOIn1dLCJlbmFibGUyRkEiOmZhbHNlLCJpYXQiOjE3MTc4NTQ3MzIsImV4cCI6MTcxNzg1NjUzMn0.j4Cp1WHqC7Vq900A8OmAagRPbxcATv7uH3fX2F3cBho
 
 {
     "secret": "K46HQ5TXIZYDK5LFLZBCGQZRNFUHO6LOLZOTSPDYKFTSGJKNFZHQ",
@@ -41,8 +41,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3YzYyM
 ### Verify 2FA
 post http://localhost:3000/auth/v1/verify-2fa
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3YzYyMzAwMi1kMWVlLTQzOWEtYWYxNC1iM2NkYmVkZmYzNDUiLCJuYW1lIjoiQW50b25pbzgiLCJsYXN0bmFtZSI6IkPDoXJkZW5hcyIsInJvbGVzIjpbeyJyb2xlSWQiOiIwOTI3MWJmZi1kZWYyLTQ5MmUtOThiYi04ZjUzM2M3NGFhYzQiLCJyb2xlTmFtZSI6Ik9QRVJBVE9SIn0seyJyb2xlSWQiOiJkNTM4ODQzYi05NWQxLTQwNmMtYTA2Mi1jNmY1Zjk3ZGExNTQiLCJyb2xlTmFtZSI6IkFETUlOIn1dLCJlbmFibGUyRkEiOmZhbHNlLCJpYXQiOjE3MTcyNjY2NTksImV4cCI6MTcxNzI2ODQ1OX0.-fUUxzLAR8dAgapsmNHxTiyisv-5wmrivQvMGxRWDkM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3YzYyMzAwMi1kMWVlLTQzOWEtYWYxNC1iM2NkYmVkZmYzNDUiLCJuYW1lIjoiQW50b25pbzgiLCJsYXN0bmFtZSI6IkPDoXJkZW5hcyIsInJvbGVzIjpbeyJyb2xlSWQiOiIwOTI3MWJmZi1kZWYyLTQ5MmUtOThiYi04ZjUzM2M3NGFhYzQiLCJyb2xlTmFtZSI6Ik9QRVJBVE9SIn0seyJyb2xlSWQiOiJkNTM4ODQzYi05NWQxLTQwNmMtYTA2Mi1jNmY1Zjk3ZGExNTQiLCJyb2xlTmFtZSI6IkFETUlOIn1dLCJlbmFibGUyRkEiOmZhbHNlLCJpYXQiOjE3MTc4NTUwMzQsImV4cCI6MTcxNzg3MzAzNH0.fejpm6g4pzP3B6DlPgRlZYk7odo5K0HSsyems5K90mI
 
 {
-    "token": "298293"
+    "token": "742300"
 }
