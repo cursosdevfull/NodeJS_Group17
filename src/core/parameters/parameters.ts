@@ -4,7 +4,7 @@ import { UserEntity } from "../../modules/user/infrastructure/entities/user.enti
 
 export class Parameters {
   static get port(): number {
-    return process.env.PORT ? Number(process.env.port) : 3000;
+    return process.env.PORT ? Number(process.env.PORT) : 3000;
   }
 
   static get host(): string {
