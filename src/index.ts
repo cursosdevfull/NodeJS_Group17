@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import app from "./app";
 import { Bootstrap, TInitialize } from "./bootstrap/bootstrap.interface";
 import { DatabaseBootstrap } from "./bootstrap/database.bootstrap";
+import { RedisBootstrap } from "./bootstrap/redis.bootstrap";
 import { ServerBootstrap } from "./bootstrap/server.bootstrap";
 import { gracefullyShutdown } from "./core/shutdown/gracefully";
 import { Logger } from "./core/utils/logger";
@@ -13,7 +14,12 @@ dotenv.config({ path: "env-variables.txt" });
 
 const serverBootstrap: Bootstrap = new ServerBootstrap(app);
 const databaseBootstrap: Bootstrap = new DatabaseBootstrap();
-const serversBootstrap: Bootstrap[] = [serverBootstrap, databaseBootstrap];
+const redisBootstrap: Bootstrap = new RedisBootstrap();
+const serversBootstrap: Bootstrap[] = [
+  serverBootstrap,
+  databaseBootstrap,
+  redisBootstrap,
+];
 const logger = Logger.createLogger();
 
 (async () => {
@@ -21,6 +27,7 @@ const logger = Logger.createLogger();
     const listBootstraps: Array<Promise<TInitialize>> = [
       serverBootstrap.initialize(),
       databaseBootstrap.initialize(),
+      redisBootstrap.initialize(),
     ];
     const responses = await Promise.all(listBootstraps);
     responses.forEach((response) =>

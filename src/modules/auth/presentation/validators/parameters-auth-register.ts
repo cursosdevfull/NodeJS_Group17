@@ -4,11 +4,11 @@ import {
   IsArray,
   IsEmail,
   IsNotEmpty,
-  IsObject,
   IsString,
   IsUUID,
   Matches,
   MinLength,
+  ValidateNested,
 } from "class-validator";
 
 export class ParametersRole {
@@ -43,9 +43,8 @@ export class ParametersAuthRegister {
 
   @IsNotEmpty()
   @IsArray()
-  //@ValidateNested({ always: true })
-  @IsObject({ always: true })
   @ArrayMinSize(1)
+  @ValidateNested({ each: true })
   @Type(() => ParametersRole)
   roles: ParametersRole[];
 }

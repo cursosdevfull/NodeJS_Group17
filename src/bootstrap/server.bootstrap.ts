@@ -7,7 +7,7 @@ import { Logger } from "../core/utils/logger";
 import { Bootstrap, TInitialize } from "./bootstrap.interface";
 
 export class ServerBootstrap implements Bootstrap {
-  private server!: http.Server;
+  private static server: http.Server;
   private readonly logger = Logger.createLogger();
 
   constructor(private app: Application) {}
@@ -32,14 +32,18 @@ export class ServerBootstrap implements Bootstrap {
           reject(error);
         });
 
-      this.server = server;
+      ServerBootstrap.server = server;
     });
   }
 
   close() {
-    this.server.close(() => {
+    ServerBootstrap.server.close(() => {
       this.logger.logInfo("Server closed");
       process.exit(0);
     });
+  }
+
+  static get serverInstance(): http.Server {
+    return ServerBootstrap.server;
   }
 }

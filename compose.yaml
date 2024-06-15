@@ -30,8 +30,8 @@ services:
       - "6379:6379"
     healthcheck:
       test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
-      interval: 10s
-      timeout: 10s
+      interval: 5s
+      timeout: 5s
       retries: 3
       start_period: 5s
     networks:
@@ -42,9 +42,9 @@ services:
     container_name: redis-client
     restart: unless-stopped
     environment:
-      REDIS_HOSTS: redis-server
-      REDIS_PORT: "6379"
-      REDIS_PASSWORD: "todovale"
+      REDIS_HOST: redis-server
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: todovale
     ports:
       - "8081:8081"
     networks:
@@ -53,18 +53,18 @@ services:
       redis-server:
         condition: service_healthy
 
-  nginx:
-    image: nginx:alpine
-    container_name: nginx
-    restart: unless-stopped
-    ports:
-      - "80:80"
-    networks:
-      - net-curso
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: nginx
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #   networks:
+  #     - net-curso
 
 volumes:
   vol-mysql:
-    external: true
+    #external: true
     name: vol-mysql
 
 networks:

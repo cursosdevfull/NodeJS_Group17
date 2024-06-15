@@ -1,11 +1,12 @@
-import { Router } from 'express';
+import { Router } from "express";
 
-import { AuthenticationGuard } from '../../../core/guards/authentication.guard';
-import { AuthorizationGuard } from '../../../core/guards/authorization.guard';
-import { UserApplication } from '../application/user.application';
-import { UserRepository } from '../domain/repositories/user.repository';
-import { UserInfrastructure } from '../infrastructure/user.infrastructure';
-import { UserController } from './user.controller';
+import { QueryCache } from "../../../core/cache/query.cache";
+import { AuthenticationGuard } from "../../../core/guards/authentication.guard";
+import { AuthorizationGuard } from "../../../core/guards/authorization.guard";
+import { UserApplication } from "../application/user.application";
+import { UserRepository } from "../domain/repositories/user.repository";
+import { UserInfrastructure } from "../infrastructure/user.infrastructure";
+import { UserController } from "./user.controller";
 
 class UserRoutes {
   private router = Router();
@@ -28,12 +29,14 @@ class UserRoutes {
       "/v1/",
       authentication.execute2FA(true).canActivate,
       authorization.rolesAllowed("ADMIN", "OPERATOR").canActivate,
+      QueryCache.build("users"),
       this.controller.getAll
     );
     this.router.get(
       "/v1/:userId",
       authentication.execute2FA(true).canActivate,
       authorization.rolesAllowed("ADMIN").canActivate,
+      QueryCache.build("users"),
       this.controller.getById
     );
     this.router.put(

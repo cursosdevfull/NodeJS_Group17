@@ -1,0 +1,6 @@
+services:
+  app:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    image: 282865065290.dkr.ecr.us-east-1.amazonaws.com/nodejs-curso17

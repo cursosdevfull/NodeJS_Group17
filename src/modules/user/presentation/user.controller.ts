@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 
+import { RedisBootstrap } from "../../../bootstrap/redis.bootstrap";
 import { Crypt } from "../../../core/services/crypt";
 import { UserApplication } from "../application/user.application";
 import { UserProperties } from "../domain/roots/user";
@@ -111,6 +112,10 @@ export class UserController {
 
     const users = usersResult.value;
 
+    if (res.locals.cacheKey) {
+      await RedisBootstrap.set(res.locals.cacheKey, JSON.stringify(users));
+    }
+
     res.status(200).json(users);
   }
 
@@ -128,6 +133,10 @@ export class UserController {
     }
 
     const user = userResult.value;
+
+    if (res.locals.cacheKey) {
+      await RedisBootstrap.set(res.locals.cacheKey, JSON.stringify(user));
+    }
 
     res.status(200).json(user);
   }

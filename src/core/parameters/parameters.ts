@@ -1,6 +1,6 @@
-import { RoleEntity } from '../../modules/role/infrastructure/entities/role.entity';
-import { StudentEntity } from '../../modules/student/infrastructure/entities/student.entity';
-import { UserEntity } from '../../modules/user/infrastructure/entities/user.entity';
+import { RoleEntity } from "../../modules/role/infrastructure/entities/role.entity";
+import { StudentEntity } from "../../modules/student/infrastructure/entities/student.entity";
+import { UserEntity } from "../../modules/user/infrastructure/entities/user.entity";
 
 export class Parameters {
   static get port(): number {
@@ -32,5 +32,29 @@ export class Parameters {
 
   static get jwtExpiresIn(): string {
     return process.env.JWT_EXPIRES_IN || "15m";
+  }
+
+  static get redisHost(): string {
+    return process.env.REDIS_HOST || "localhost";
+  }
+
+  static get redisPort(): number {
+    return process.env.REDIS_PORT ? Number(process.env.REDIS_PORT) : 6379;
+  }
+
+  static get redisPassword(): string {
+    return process.env.REDIS_PASSWORD || "";
+  }
+
+  static get redisMaxRetriesPerRequest(): number {
+    return process.env.REDIS_MAX_RETRIES_PER_REQUEST
+      ? Number(process.env.REDIS_MAX_RETRIES_PER_REQUEST)
+      : 3;
+  }
+
+  static get redisExpiresIn(): number {
+    return process.env.REDIS_EXPIRES_IN
+      ? Number(process.env.REDIS_EXPIRES_IN)
+      : 3600;
   }
 }

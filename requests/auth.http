@@ -3,8 +3,8 @@ post http://localhost:3000/auth/v1/login
 Content-Type: application/json
 
 {
-    "email": "antonio8.cardenas@email.com",
-    "password": "123456789"
+    "email": "sergio@email.com",
+    "password": "ElG1ganteD3lFindelMund0"
 }
 
 ### new access token
@@ -20,29 +20,29 @@ post http://localhost:3000/auth/v1/register
 Content-Type: application/json
 
 {
-    "name": "An",
-    "lastname": "Cá",
-    "email": "antonio8.cardenas@email.com",
-    "password": "12345678",
+    "name": "Sergio",
+    "lastname": "Hidalgo",
+    "email": "sergio@email.com",
+    "password": "ElG1ganteD3lFindelMund0",
     "roles": [{"roleId": "d538843b-95d1-406c-a062-c6f5f97da154"}]
 }
 
 ### Enable 2FA
 post http://localhost:3000/auth/v1/enable-2fa
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3YzYyMzAwMi1kMWVlLTQzOWEtYWYxNC1iM2NkYmVkZmYzNDUiLCJuYW1lIjoiQW50b25pbzgiLCJsYXN0bmFtZSI6IkPDoXJkZW5hcyIsInJvbGVzIjpbeyJyb2xlSWQiOiIwOTI3MWJmZi1kZWYyLTQ5MmUtOThiYi04ZjUzM2M3NGFhYzQiLCJyb2xlTmFtZSI6Ik9QRVJBVE9SIn0seyJyb2xlSWQiOiJkNTM4ODQzYi05NWQxLTQwNmMtYTA2Mi1jNmY1Zjk3ZGExNTQiLCJyb2xlTmFtZSI6IkFETUlOIn1dLCJlbmFibGUyRkEiOmZhbHNlLCJpYXQiOjE3MTc4NTQ3MzIsImV4cCI6MTcxNzg1NjUzMn0.j4Cp1WHqC7Vq900A8OmAagRPbxcATv7uH3fX2F3cBho
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlOTc1YjQwNy05Y2FjLTQwZDQtODIzOC1hZDQyMDc1OTYzOGMiLCJuYW1lIjoiU2VyZ2lvIiwibGFzdG5hbWUiOiJIaWRhbGdvIiwicm9sZXMiOlt7InJvbGVJZCI6ImQ1Mzg4NDNiLTk1ZDEtNDA2Yy1hMDYyLWM2ZjVmOTdkYTE1NCIsInJvbGVOYW1lIjoiQURNSU4ifV0sImVuYWJsZTJGQSI6ZmFsc2UsImlhdCI6MTcxODQ2NDA2MSwiZXhwIjoxNzE4NDgyMDYxfQ.ZS9i9rn0fhhoMKBa1kbsK0gyexM8XvOqd0ELZ7Qx1OQ
 
 {
-    "secret": "K46HQ5TXIZYDK5LFLZBCGQZRNFUHO6LOLZOTSPDYKFTSGJKNFZHQ",
-    "token": "067241"
+    "secret": "I4XGEIJZJRAS6MCKKFKHUOSIHJ2TCPBEMRFFEUKFLJIGS6ZDGFIA",
+    "token": "224904"
 }
 
 
 ### Verify 2FA
 post http://localhost:3000/auth/v1/verify-2fa
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3YzYyMzAwMi1kMWVlLTQzOWEtYWYxNC1iM2NkYmVkZmYzNDUiLCJuYW1lIjoiQW50b25pbzgiLCJsYXN0bmFtZSI6IkPDoXJkZW5hcyIsInJvbGVzIjpbeyJyb2xlSWQiOiIwOTI3MWJmZi1kZWYyLTQ5MmUtOThiYi04ZjUzM2M3NGFhYzQiLCJyb2xlTmFtZSI6Ik9QRVJBVE9SIn0seyJyb2xlSWQiOiJkNTM4ODQzYi05NWQxLTQwNmMtYTA2Mi1jNmY1Zjk3ZGExNTQiLCJyb2xlTmFtZSI6IkFETUlOIn1dLCJlbmFibGUyRkEiOmZhbHNlLCJpYXQiOjE3MTc4NTUwMzQsImV4cCI6MTcxNzg3MzAzNH0.fejpm6g4pzP3B6DlPgRlZYk7odo5K0HSsyems5K90mI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlOTc1YjQwNy05Y2FjLTQwZDQtODIzOC1hZDQyMDc1OTYzOGMiLCJuYW1lIjoiU2VyZ2lvIiwibGFzdG5hbWUiOiJIaWRhbGdvIiwicm9sZXMiOlt7InJvbGVJZCI6ImQ1Mzg4NDNiLTk1ZDEtNDA2Yy1hMDYyLWM2ZjVmOTdkYTE1NCIsInJvbGVOYW1lIjoiQURNSU4ifV0sImVuYWJsZTJGQSI6ZmFsc2UsImlhdCI6MTcxODQ2NDYwOCwiZXhwIjoxNzE4NDgyNjA4fQ.mjOEXxE4D3t1IyqmS5aMOEWm-5OFe0Say0NtQF9rmoA
 
 {
-    "token": "742300"
+    "token": "507569"
 }
