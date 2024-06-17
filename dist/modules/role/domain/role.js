@@ -1,1 +1,0 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.Role=void 0;class Role{constructor(e,o){this.roleId=e,this.roleName=o}get properties(){return{roleId:this.roleId,roleName:this.roleName}}}exports.Role=Role;
