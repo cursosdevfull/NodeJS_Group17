@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.Auth=void 0;class Auth{constructor(s,t){this.email=s,this.password=t}get properties(){return{email:this.email,password:this.password}}}exports.Auth=Auth;
