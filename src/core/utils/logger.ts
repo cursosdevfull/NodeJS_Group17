@@ -1,4 +1,4 @@
-import winston, { format } from "winston";
+import winston, { format } from 'winston';
 
 export type LogMessage = string;
 export type LogContext = Record<string, any>;
@@ -47,11 +47,9 @@ export class Logger {
   }
 
   private _initialize() {
-    const logger = winston.createLogger({
+    return winston.createLogger({
       transports: Logger._getTransports(),
     });
-
-    return logger;
   }
 
   private static _getTransports() {

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+  <file path="D:\Cursos\NodeJS_Group17\test\my-first.spec.ts">
+    <testCase name="Casos de uso Caso de uso 1" duration="18"/>
+  </file>
+  <file path="D:\Cursos\NodeJS_Group17\test\modules\user\presentation\user.controller.spec.ts">
+    <testCase name="user/controller getAll should get all users" duration="14"/>
+    <testCase name="user/controller getAll should get error" duration="2"/>
+  </file>
+  <file path="D:\Cursos\NodeJS_Group17\test\modules\user\presentation\user-get-by-id.spec.ts">
+    <testCase name="UserController.getById should return a user successfully" duration="11"/>
+    <testCase name="UserController.getById should handle errors correctly" duration="2"/>
+    <testCase name="UserController.getById should cache the user if cacheKey is present" duration="2"/>
+  </file>
+</testExecutions>

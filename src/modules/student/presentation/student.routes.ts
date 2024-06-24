@@ -1,6 +1,6 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import studentController from "./student.controller";
+import studentController from './student.controller';
 
 export class StudentRoutes {
   readonly router: Router;
@@ -8,14 +8,11 @@ export class StudentRoutes {
 
   constructor() {
     this.router = Router();
-    /*this.controller = new StudentController(
-      new StudentApplication(StudentInMemory.getInstance())
-    );*/
     this.mountRoutes();
   }
 
   private mountRoutes() {
-    this.router.get("/", this.controller.getAll.bind(this.controller)); // this.controller.getAll.bind(this.controller)   !== this.controller.getAll
+    this.router.get("/", this.controller.getAll.bind(this.controller));
     this.router.get("/page", this.controller.getByPage.bind(this.controller));
     this.router.get("/:id", this.controller.getOne.bind(this.controller));
     this.router.post("/", this.controller.create.bind(this.controller));

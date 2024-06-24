@@ -1,17 +1,17 @@
-import { err, ok, Result } from "neverthrow";
-import { IsNull } from "typeorm";
+import { err, ok, Result } from 'neverthrow';
+import { IsNull } from 'typeorm';
 
-import { DatabaseBootstrap } from "../../../bootstrap/database.bootstrap";
+import { DatabaseBootstrap } from '../../../bootstrap/database.bootstrap';
 import {
   BaseException,
   InternalServerErrorException,
   MESSAGE_STATUS,
-} from "../../../core/handle-errors/responses/exception";
-import { LogContext, Logger } from "../../../core/utils/logger";
-import { UserRepository } from "../domain/repositories/user.repository";
-import { User } from "../domain/roots/user";
-import { UserDto } from "./dtos/user.dto";
-import { UserEntity } from "./entities/user.entity";
+} from '../../../core/handle-errors/responses/exception';
+import { LogContext, Logger } from '../../../core/utils/logger';
+import { UserRepository } from '../domain/repositories/user.repository';
+import { User } from '../domain/roots/user';
+import { UserDto } from './dtos/user.dto';
+import { UserEntity } from './entities/user.entity';
 
 export type ResultSave = Result<User, BaseException>;
 export type ResultGetAll = Result<User[], BaseException>;
@@ -147,7 +147,7 @@ export class UserInfrastructure implements UserRepository {
       const repository =
         DatabaseBootstrap.getDataSource().getRepository(UserEntity);
 
-      const [usersEntity, total] = await repository.findAndCount({
+      const [usersEntity] = await repository.findAndCount({
         where: { deletedAt: IsNull() },
         skip: page * limit,
         take: limit,

@@ -1,13 +1,13 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from 'express';
 
-import { Crypt } from "../../../core/services/crypt";
-import { OneTimePassword } from "../../../core/services/otp";
-import { Tokens } from "../../../core/services/tokens";
-import { UserApplication } from "../../user/application/user.application";
-import { UserProperties } from "../../user/domain/roots/user";
-import { UserFactory } from "../../user/domain/roots/user.factory";
-import { AuthApplication } from "../application/auth.application";
-import { AuthFactory } from "../domain/auth-factory";
+import { Crypt } from '../../../core/services/crypt';
+import { OneTimePassword } from '../../../core/services/otp';
+import { Tokens } from '../../../core/services/tokens';
+import { UserApplication } from '../../user/application/user.application';
+import { UserProperties } from '../../user/domain/roots/user';
+import { UserFactory } from '../../user/domain/roots/user.factory';
+import { AuthApplication } from '../application/auth.application';
+import { AuthFactory } from '../domain/auth-factory';
 
 export class AuthController {
   constructor(
@@ -119,7 +119,7 @@ export class AuthController {
       });
     }
 
-    const tokens = await Tokens.generateTokens(user, true);
+    const tokens = Tokens.generateTokens(user, true);
     res.status(200).json(tokens);
   }
 }

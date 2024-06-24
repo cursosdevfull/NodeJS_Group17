@@ -1,14 +1,14 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import { AuthenticationGuard } from "../../../core/guards/authentication.guard";
-import { ValidateParameters } from "../../../core/validate/validate.middleware";
-import { UserApplication } from "../../user/application/user.application";
-import { UserRepository } from "../../user/domain/repositories/user.repository";
-import { UserInfrastructure } from "../../user/infrastructure/user.infrastructure";
-import { AuthApplication } from "../application/auth.application";
-import { AuthController } from "./auth.controller";
-import { ParametersAuthLogin } from "./validators/parameters-auth-login";
-import { ParametersAuthRegister } from "./validators/parameters-auth-register";
+import { AuthenticationGuard } from '../../../core/guards/authentication.guard';
+import { ValidateParameters } from '../../../core/validate/validate.middleware';
+import { UserApplication } from '../../user/application/user.application';
+import { UserRepository } from '../../user/domain/repositories/user.repository';
+import { UserInfrastructure } from '../../user/infrastructure/user.infrastructure';
+import { AuthApplication } from '../application/auth.application';
+import { AuthController } from './auth.controller';
+import { ParametersAuthLogin } from './validators/parameters-auth-login';
+import { ParametersAuthRegister } from './validators/parameters-auth-register';
 
 class AuthRoutes {
   private router = Router();
@@ -47,10 +47,11 @@ class AuthRoutes {
     return this.router;
   }
 }
+
 const userRepository: UserRepository = new UserInfrastructure();
 const application = new AuthApplication(userRepository);
 const userApplication = new UserApplication(userRepository);
-const controller = new AuthController(application, userApplication);
-const router = new AuthRoutes(controller).getRouter();
+const controllerAuth = new AuthController(application, userApplication);
+const router = new AuthRoutes(controllerAuth).getRouter();
 
 export { router };

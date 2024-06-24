@@ -1,5 +1,5 @@
-import { Student } from "../../domain/student";
-import { StudentEntity } from "../entities/student.entity";
+import { Student } from '../../domain/student';
+import { StudentEntity } from '../entities/student.entity';
 
 export class StudentDto {
   static fromDomainToData(
@@ -24,7 +24,6 @@ export class StudentDto {
       return data.map((student) => this.fromDataToDomain(student)) as Student[];
     }
 
-    const studentDomain = new Student(data);
-    return studentDomain;
+    return new Student(data);
   }
 }

@@ -53,6 +53,15 @@ services:
       redis-server:
         condition: service_healthy
 
+  sonarqube:
+    image: sonarqube:8-community
+    container_name: sonarqube
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+      - "9092:9092"
+    networks:
+      - net-curso
   # nginx:
   #   image: nginx:alpine
   #   container_name: nginx

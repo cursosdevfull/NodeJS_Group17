@@ -22,7 +22,7 @@ class RoleRoutes {
 }
 const repository: RoleRepository = new RoleInfrastructure();
 const application = new RoleApplication(repository);
-const controller = new RoleController(application);
-const router = new RoleRoutes(controller).getRouter();
+const controllerRole = new RoleController(application);
+const router = new RoleRoutes(controllerRole).getRouter();
 
 export { router };

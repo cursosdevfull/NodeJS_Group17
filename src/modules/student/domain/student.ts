@@ -1,3 +1,5 @@
+import crypto from 'crypto';
+
 interface StudentEssentials {
   name: string;
   lastname: string;
@@ -82,7 +84,7 @@ export class Student {
     }
 
     if (!props.id) {
-      this.id = Math.floor(Math.random() * 1000);
+      this.id = crypto.randomInt(10 ** 7, 10 ** 8 - 1);
     }
 
     if (props.createdAt) {

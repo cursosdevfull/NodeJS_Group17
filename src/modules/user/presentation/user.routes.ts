@@ -1,12 +1,12 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import { QueryCache } from "../../../core/cache/query.cache";
-import { AuthenticationGuard } from "../../../core/guards/authentication.guard";
-import { AuthorizationGuard } from "../../../core/guards/authorization.guard";
-import { UserApplication } from "../application/user.application";
-import { UserRepository } from "../domain/repositories/user.repository";
-import { UserInfrastructure } from "../infrastructure/user.infrastructure";
-import { UserController } from "./user.controller";
+import { QueryCache } from '../../../core/cache/query.cache';
+import { AuthenticationGuard } from '../../../core/guards/authentication.guard';
+import { AuthorizationGuard } from '../../../core/guards/authorization.guard';
+import { UserApplication } from '../application/user.application';
+import { UserRepository } from '../domain/repositories/user.repository';
+import { UserInfrastructure } from '../infrastructure/user.infrastructure';
+import { UserController } from './user.controller';
 
 class UserRoutes {
   private router = Router();
@@ -65,7 +65,7 @@ class UserRoutes {
 }
 const repository: UserRepository = new UserInfrastructure();
 const application = new UserApplication(repository);
-const controller = new UserController(application);
-const router = new UserRoutes(controller).getRouter();
+const controllerUser = new UserController(application);
+const router = new UserRoutes(controllerUser).getRouter();
 
 export { router };

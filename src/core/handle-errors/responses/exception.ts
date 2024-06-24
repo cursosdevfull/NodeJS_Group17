@@ -28,9 +28,11 @@ export interface IExceptionEssentials {
   name: string;
 }
 
+export type IErrorsDetails = string | string[] | undefined;
+
 export interface IExceptionOptionals {
   stack: string;
-  errorsDetails: string | string[] | undefined;
+  errorsDetails: IErrorsDetails;
 }
 
 export type IExceptionOptions = IExceptionEssentials &
@@ -42,7 +44,7 @@ export abstract class BaseException extends Error {
   abstract message: MESSAGE_STATUS | string;
   abstract name: string;
   abstract stack: string | undefined;
-  abstract errorsDetails: string | string[] | undefined;
+  abstract errorsDetails: IErrorsDetails;
 
   constructor(message: string) {
     super(message);
@@ -55,7 +57,7 @@ export class InternalServerErrorException extends BaseException {
   readonly message: MESSAGE_STATUS | string;
   readonly name: string;
   readonly stack: string;
-  readonly errorsDetails: string | string[] | undefined;
+  readonly errorsDetails: IErrorsDetails;
 
   constructor(options: IExceptionOptions) {
     super(options.message);
@@ -69,7 +71,7 @@ export class NotFoundException extends BaseException {
   readonly message: MESSAGE_STATUS | string;
   readonly name: string;
   readonly stack: string;
-  readonly errorsDetails: string | string[] | undefined;
+  readonly errorsDetails: IErrorsDetails;
 
   constructor(options: IExceptionOptions) {
     super(options.message);
@@ -83,7 +85,7 @@ export class BadRequestException extends BaseException {
   readonly message: MESSAGE_STATUS | string;
   readonly name: string;
   readonly stack: string;
-  readonly errorsDetails: string | string[] | undefined;
+  readonly errorsDetails: IErrorsDetails;
 
   constructor(options: IExceptionOptions) {
     super(options.message);
@@ -97,7 +99,7 @@ export class UnauthorizedException extends BaseException {
   readonly message: MESSAGE_STATUS | string;
   readonly name: string;
   readonly stack: string;
-  readonly errorsDetails: string | string[] | undefined;
+  readonly errorsDetails: IErrorsDetails;
 
   constructor(options: IExceptionOptions) {
     super(options.message);

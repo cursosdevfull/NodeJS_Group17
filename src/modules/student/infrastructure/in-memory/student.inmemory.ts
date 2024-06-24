@@ -1,10 +1,10 @@
-import { readFile, writeFile } from "node:fs";
-import { join } from "node:path";
+import { readFile, writeFile } from 'node:fs';
+import { join } from 'node:path';
 
-import { StudentPort } from "../../domain/repositories/student.port";
-import { IStudentUpdate, Student } from "../../domain/student";
-import { StudentDto } from "../dtos/student.dto";
-import { StudentEntity } from "../entities/student.entity";
+import { StudentPort } from '../../domain/repositories/student.port';
+import { IStudentUpdate, Student } from '../../domain/student';
+import { StudentDto } from '../dtos/student.dto';
+import { StudentEntity } from '../entities/student.entity';
 
 export interface IStudent {
   id?: number;
@@ -27,13 +27,9 @@ export interface IStudent {
 export class StudentInMemory implements StudentPort {
   private static instance: StudentInMemory;
 
-  /*   private students: StudentEntity[] = studentData.map((student) => {
-    const entity = new StudentEntity();
-    Object.assign(entity, student);
-    return entity;
-  }); */
-
-  private constructor() {}
+  private constructor() {
+    // this intencional
+  }
 
   static getInstance(): StudentInMemory {
     if (!StudentInMemory.instance) {
@@ -43,18 +39,9 @@ export class StudentInMemory implements StudentPort {
   }
 
   async findAll(): Promise<Student[]> {
-    /*const students = fs.readFileSync(
-      "./src/modules/student/infrastructure/in-memory/student.json"
-    );*/
-
     const students: StudentEntity[] = await this.readData();
 
-    /*     console.log("__dirname", __dirname);
-    console.log("join", path.join(__dirname, "../data", "student.json"));
-
-    console.log("students", JSON.parse(students.toString()).length); */
-
-    return await Promise.resolve([
+    return Promise.resolve([
       ...(StudentDto.fromDataToDomain(
         students.filter((el) => !el.deletedAt || el.deletedAt === null)
       ) as Student[]),
@@ -62,14 +49,11 @@ export class StudentInMemory implements StudentPort {
   }
 
   async findOne(id: number): Promise<Student | undefined> {
-    //const student = this.students.find((student) => student.id === id);
     const data = await this.readData();
-    const student = data.find((student) => student.id === id);
+    const student = data.find((item) => item.id === id);
 
     if (student && student.deletedAt === null) {
-      return await Promise.resolve(
-        StudentDto.fromDataToDomain(student) as Student
-      );
+      return Promise.resolve(StudentDto.fromDataToDomain(student) as Student);
     }
 
     return undefined;
@@ -78,7 +62,7 @@ export class StudentInMemory implements StudentPort {
   async getByPage(page: number, limit: number): Promise<Student[]> {
     const students = await this.readData();
 
-    return await Promise.resolve(
+    return Promise.resolve(
       StudentDto.fromDataToDomain(
         students
           .filter((el) => !el.deletedAt || el.deletedAt === null)
@@ -97,9 +81,7 @@ export class StudentInMemory implements StudentPort {
 
     this.writeData(students);
 
-    return await Promise.resolve(
-      StudentDto.fromDataToDomain(entity) as Student
-    );
+    return Promise.resolve(StudentDto.fromDataToDomain(entity) as Student);
   }
 
   async update(
@@ -109,11 +91,10 @@ export class StudentInMemory implements StudentPort {
     const students = await this.readData();
 
     const studentIndex = students.findIndex(
-      (student) =>
-        student.id === id && (!student.deletedAt || student.deletedAt === null)
+      (item) => item.id === id && (!item.deletedAt || item.deletedAt === null)
     );
     if (studentIndex === -1) {
-      return await Promise.resolve(undefined);
+      return Promise.resolve(undefined);
     }
 
     const studentDomain = StudentDto.fromDataToDomain(
@@ -130,7 +111,7 @@ export class StudentInMemory implements StudentPort {
 
     this.writeData(students);
 
-    return await Promise.resolve(studentDomain);
+    return Promise.resolve(studentDomain);
   }
 
   async delete(id: number): Promise<Student | undefined> {
@@ -141,7 +122,7 @@ export class StudentInMemory implements StudentPort {
         student.id === id && (!student.deletedAt || student.deletedAt === null)
     );
     if (studentIndex === -1) {
-      return await Promise.resolve(undefined);
+      return Promise.resolve(undefined);
     }
     const studentDomain = StudentDto.fromDataToDomain(
       students[studentIndex]
@@ -156,18 +137,16 @@ export class StudentInMemory implements StudentPort {
 
     this.writeData(students);
 
-    return await Promise.resolve(studentDomain);
+    return Promise.resolve(studentDomain);
   }
 
   async findByEmail(email: string): Promise<Student> {
     const students = await this.readData();
 
-    const student = students.find((student) => student.email === email);
+    const student = students.find((item) => item.email === email);
 
     if (student && (!student.deletedAt || student.deletedAt === null)) {
-      return await Promise.resolve(
-        StudentDto.fromDataToDomain(student) as Student
-      );
+      return Promise.resolve(StudentDto.fromDataToDomain(student) as Student);
     }
 
     return undefined;
@@ -178,9 +157,6 @@ export class StudentInMemory implements StudentPort {
   }
 
   private readFileJson(): Promise<string> {
-    /*return fs
-      .readFileSync(path.join(__dirname, "../data", "student.json"))
-      .toString();*/
     return new Promise<string>((resolve, reject) => {
       readFile(
         join(__dirname, "../data", "student.json"),
@@ -200,11 +176,6 @@ export class StudentInMemory implements StudentPort {
   }
 
   private writeData(data: StudentEntity[]): Promise<void> {
-    /*     fs.writeFileSync(
-      path.join(__dirname, "../data", "student.json"),
-      JSON.stringify(data)
-    ); */
-
     return new Promise<void>((resolve, reject) => {
       writeFile(
         join(__dirname, "../data", "student.json"),

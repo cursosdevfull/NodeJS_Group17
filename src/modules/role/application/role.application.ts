@@ -4,6 +4,6 @@ export class RoleApplication {
   constructor(private readonly repository: RoleRepository) {}
 
   async getAll() {
-    return await this.repository.getAll();
+    return this.repository.getAll();
   }
 }
